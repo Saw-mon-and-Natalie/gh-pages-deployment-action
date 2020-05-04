@@ -91,7 +91,7 @@ then
 fi
 
 # moving deployment $FOLDER out of git folder
-mv $FOLDER /tmp/$FOLDER && \ 
+mv $FOLDER /tmp && \ 
 
 # Commits the data to GitHub
 

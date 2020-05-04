@@ -96,7 +96,8 @@ ls -la $FOLDER && \
 echo PATH is $PATH
 ls -la /bin 
 mv --help && \
-mv "$FOLDER" "/tmp" && \ 
+echo HOME is $HOME
+mv $FOLDER $HOME && \ 
 
 # Commits the data to GitHub
 
@@ -104,7 +105,7 @@ echo "Deploying to GitHub..." && \
 git checkout $BRANCH && \
 
 if [ -f "README.md" ]; then
-    mv README.md /tmp/$FOLDER
+    mv README.md "/${HOME}/${FOLDER}"
 fi
 
 rm -rf . && \

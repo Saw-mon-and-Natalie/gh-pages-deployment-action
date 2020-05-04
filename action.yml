@@ -1,0 +1,9 @@
+name: 'Deploy Build foler to GitHub Pages'
+description: 'This action will handle deployment'
+author: 'Saw-mon & Natalie <samangharib50233@gmail.com>'
+runs:
+    using: 'docker'
+    image: 'Dockerfile'
+branding:
+    icon: 'git-commit'
+    color: 'blue'

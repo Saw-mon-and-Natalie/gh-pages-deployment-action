@@ -97,6 +97,7 @@ echo PATH is $PATH
 ls -la /bin 
 mv --help && \
 echo HOME is $HOME
+mkdir "/${HOME}/${FOLDER}"
 mv $FOLDER $HOME && \ 
 
 # Commits the data to GitHub

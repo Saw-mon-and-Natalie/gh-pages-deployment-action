@@ -52,7 +52,7 @@ cd $GITHUB_WORKSPACE && \
 
 git init && \
 git config --global user.email "${COMMIT_EMAIL}" && \
-git confit --global user.name "${COMMIT_NAME}" && \
+git config --global user.name "${COMMIT_NAME}" && \
 
 ## Initializes the repository path using the access token
 REPOSITORY_PATH="https://${ACCESS_TOKEN:-"x-access-token:$GITHUB_TOKEN"}@github.com/${GITHUB_REPOSITORY}.git" && \

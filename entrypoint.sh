@@ -91,14 +91,10 @@ then
 fi
 
 # moving deployment $FOLDER out of git folder
-echo PATH is $PATH
-echo HOME is $HOME
-mkdir "/${HOME}/${FOLDER}"
-ls -la $HOME
-echo "Trying to move build folder"
-/bin/mv -v "${FOLDER}" "${HOME}" && \
+mv -v $FOLDER $HOME && \
 
 # Commits the data to GitHub
+git branch -a
 
 echo "Deploying to GitHub..." && \
 git checkout $BRANCH && \

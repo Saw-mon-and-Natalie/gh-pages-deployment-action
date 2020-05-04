@@ -32,7 +32,7 @@ apt-get install -y jq && \
 
 # Gets the commit email/name if it exists in the push event payload
 COMMIT_EMAIL=`jq '.pusher.email' ${GITHUB_EVENT_PATH}`
-COMMIT_NAME=`jq 'pusher.name' ${GITHUB_EVENT_PATH}`
+COMMIT_NAME=`jq '.pusher.name' ${GITHUB_EVENT_PATH}`
 
 if [ -z "$COMMIT_EMAIL"]
 then

@@ -92,6 +92,9 @@ fi
 
 # moving deployment $FOLDER out of git folder
 ls -la $FOLDER && \
+
+echo PATH is $PATH
+ls -la /bin 
 mv --help && \
 mv "$FOLDER" "/tmp" && \ 
 

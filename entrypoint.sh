@@ -75,9 +75,10 @@ else
     git fetch $REPOSITORY_PATH
     git branch -avv
     git remote set-branches --add origin $BRANCH
-    git fetch $REPOSITORY_PATH
-    git checkout $BRANCH
     git branch -avv
+    git fetch $REPOSITORY_PATH $BRANCH
+    git checkout $BRANCH
+    
 fi
 
 # Checks out the base branch to begin the deploy process

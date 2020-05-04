@@ -71,6 +71,9 @@ then
     git commit -m "Initial ${BRANCH} commit" && \
     git push $REPOSITORY_PATH $BRANCH
 else 
+    git remote -v 
+    git fetch $REPOSITORY_PATH
+    git branch -avv
     git checkout --track "${REPOSITORY_PATH}/${BRANCH}"
 fi
 

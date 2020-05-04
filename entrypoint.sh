@@ -60,7 +60,7 @@ REPOSITORY_PATH="https://${ACCESS_TOKEN:-"x-access-token:$GITHUB_TOKEN"}@github.
 # Checks to see if the remote exists prior to deploying
 # If the branch doesn't exist it gets created here as an orphan
 REMOTE_BRANCH_EXISTS="$(git ls-remote --heads "$REPOSITORY_PATH" "$BRANCH" | wc -l)"
-if [ REMOTE_BRANCH_EXISTS -eq 0 ];
+if [ $REMOTE_BRANCH_EXISTS -eq 0 ];
 then
     echo "Creating remote branch ${BRANCH} as it doesn't exist..."
     git checkout "${BASE_BRANCH:-master}" && \
@@ -74,7 +74,7 @@ else
     git remote -v 
     git fetch $REPOSITORY_PATH
     git branch -avv
-    git remote set-branches --add $REPOSITORY_PATH $BRANCH
+    git remote set-branches --add origin $BRANCH
     git fetch $REPOSITORY_PATH
     git checkout $BRANCH
     git branch -avv

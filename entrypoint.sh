@@ -22,6 +22,7 @@ fi
 
 case "$FOLDER" in /*|./*)
     echo "The deployment folder cannot be prefixed with '/' or './'. Instead refrence the folder name directly."
+    exit 1
 esac
 
 # Installs Git and jq.
@@ -77,18 +78,36 @@ git checkout "${BASE_BRANCH:-master}" && \
 echo "Running build scripts... $BUILD_SCRIPT" && \
 eval "$BUILD_SCRIPT" && \
 
+if [ "$(ls "$FOLDER" | wc -l)" -eq 0 ]
+then
+    echo "Build folder is empty. Nothing to do here."
+    exit 0
+fi
+
 if [ "CNAME" ];
 then
     echo "Generating a CNAME file in the $FOLDER directory..."
     echo $CNAME > $FOLDER/CNAME
 fi
 
+# moving deployment $FOLDER out of git folder
+mv $FOLDER /tmp/$FOLDER && \ 
+
 # Commits the data to GitHub
 
 echo "Deploying to GitHub..." && \
-git add -f $FOLDER && \
+git checkout $BRANCH && \
+
+if [ -f "README.md" ]; then
+    mv README.md /tmp/$FOLDER
+fi
+
+rm -rf . && \
+mv /tmp/$FOLDER/* . && \
+git add . && \
 
 git commit -m "Deploying to ${BRANCH} from ${BASE_BRANCH:-master} ${GITHUB_SHA}" --quiet && \
-git push $REPOSITORY_PATH `git subtree split --prefix $FOLDER ${BASE_BRANCH:-master}`:$BRANCH --force && \\
+git push $REPOSITORY_PATH $BRANCH --force && \
 
 echo "Deployment successful!"
+exit 0

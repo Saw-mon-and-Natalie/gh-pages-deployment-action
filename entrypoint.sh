@@ -92,6 +92,7 @@ fi
 
 # moving deployment $FOLDER out of git folder
 ls -la $FOLDER && \
+mv --help && \
 mv "$FOLDER" "/tmp" && \ 
 
 # Commits the data to GitHub

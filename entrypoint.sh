@@ -96,7 +96,7 @@ echo HOME is $HOME
 mkdir "/${HOME}/${FOLDER}"
 ls -la $HOME
 echo "Trying to move build folder"
-/bin/mv -v "${FOLDER}" "${HOME}" && \ 
+/bin/mv -v "${FOLDER}" "${HOME}" && \
 
 # Commits the data to GitHub
 

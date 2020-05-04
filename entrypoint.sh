@@ -59,7 +59,8 @@ REPOSITORY_PATH="https://${ACCESS_TOKEN:-"x-access-token:$GITHUB_TOKEN"}@github.
 
 # Checks to see if the remote exists prior to deploying
 # If the branch doesn't exist it gets created here as an orphan
-if [ "$(git ls-remote --heads "$REPOSITORY_PATH" "$BRANCH" | wc -l)" -eq 0 ];
+REMOTE_BRANCH_EXISTS="$(git ls-remote --heads "$REPOSITORY_PATH" "$BRANCH" | wc -l)"
+if [ REMOTE_BRANCH_EXISTS -eq 0 ];
 then
     echo "Creating remote branch ${BRANCH} as it doesn't exist..."
     git checkout "${BASE_BRANCH:-master}" && \
@@ -69,8 +70,8 @@ then
     git add README.md && \
     git commit -m "Initial ${BRANCH} commit" && \
     git push $REPOSITORY_PATH $BRANCH
-else
-    git pull $REPOSITORY_PATH $BRANCH
+else 
+    git checkout --track "${REPOSITORY_PATH}/${BRANCH}"
 fi
 
 # Checks out the base branch to begin the deploy process

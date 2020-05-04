@@ -1,4 +1,4 @@
-#! /bin/sh -l
+#! /bin/sh -lvx
 
 set -e
 
@@ -94,8 +94,9 @@ fi
 echo PATH is $PATH
 echo HOME is $HOME
 mkdir "/${HOME}/${FOLDER}"
-ls -lar $HOME
-mv $FOLDER $HOME && \ 
+ls -la $HOME
+echo "Trying to move build folder"
+/bin/mv -v "${FOLDER}" "${HOME}" && \ 
 
 # Commits the data to GitHub
 

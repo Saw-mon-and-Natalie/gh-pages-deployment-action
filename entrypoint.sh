@@ -69,6 +69,8 @@ then
     git add README.md && \
     git commit -m "Initial ${BRANCH} commit" && \
     git push $REPOSITORY_PATH $BRANCH
+else
+    git pull $REPOSITORY_PATH $BRANCH
 fi
 
 # Checks out the base branch to begin the deploy process
@@ -104,7 +106,7 @@ if [ -f "README.md" ]; then
 fi
 
 rm -rf . && \
-mv /tmp/$FOLDER/* . && \
+mv "/${HOME}/${FOLDER}/*" . && \
 git add . && \
 
 git commit -m "Deploying to ${BRANCH} from ${BASE_BRANCH:-master} ${GITHUB_SHA}" --quiet && \

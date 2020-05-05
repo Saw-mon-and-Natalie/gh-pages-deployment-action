@@ -90,7 +90,10 @@ mv -v $FOLDER $HOME && \
 # If the branch doesn't exist it gets created here as an orphan
 REMOTE_BRANCH_EXISTS="$(git ls-remote --heads "$REPOSITORY_PATH" "$BRANCH" | wc -l)"
 git checkout --orphan $BRANCH && \
-git rm -rf . && \
+
+# Remove all content except .git folder
+echo "Removing everything except .git folder" && \
+find . ! \( -name '.' -type d \) -and ! \( -name '.git' -type d \) -exec rm -rf {} + && \
 
 if [ $REMOTE_BRANCH_EXISTS -eq 0 ];
 then
@@ -100,7 +103,8 @@ then
     git commit -m "Initial ${BRANCH} commit" && \
     git push $REPOSITORY_PATH $BRANCH
 else 
-    git pull $REPOSITORY_PATH $BRANCH
+    git pull $REPOSITORY_PATH $BRANCH && \
+    git rm -rf . && \
 fi
 
 echo "Deploying to GitHub..." && \

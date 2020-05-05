@@ -105,7 +105,7 @@ git branch -a
 echo "Deploying to GitHub..." && \
 git checkout $BRANCH && \
 
-mv "/${HOME}/${FOLDER}/*" . && \
+mv "${HOME}/${FOLDER}/*" . && \
 git add . && \
 
 git commit -m "Deploying to ${BRANCH} from ${BASE_BRANCH:-master} ${GITHUB_SHA}" --quiet && \

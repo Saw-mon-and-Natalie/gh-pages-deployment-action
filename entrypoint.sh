@@ -105,6 +105,8 @@ git branch -a
 echo "Deploying to GitHub..." && \
 git checkout $BRANCH && \
 
+# Checking the content of moved dist
+ls "${HOME}/${FOLDER}/"
 mv "${HOME}/${FOLDER}/*" . && \
 git add . && \
 

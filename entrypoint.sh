@@ -71,14 +71,10 @@ then
     git commit -m "Initial ${BRANCH} commit" && \
     git push $REPOSITORY_PATH $BRANCH
 else 
-    git remote -v 
-    git fetch $REPOSITORY_PATH
+    git checkout --orphan $BRANCH && \
+    git rm -rf . && \
+    git pull $REPOSITORY_PATH $BRANCH
     git branch -avv
-    git remote set-branches --add origin $BRANCH
-    git branch -avv
-    git fetch $REPOSITORY_PATH $BRANCH
-    git checkout $BRANCH
-    
 fi
 
 # Checks out the base branch to begin the deploy process
@@ -109,11 +105,6 @@ git branch -a
 echo "Deploying to GitHub..." && \
 git checkout $BRANCH && \
 
-if [ -f "README.md" ]; then
-    mv README.md "/${HOME}/${FOLDER}"
-fi
-
-rm -rf . && \
 mv "/${HOME}/${FOLDER}/*" . && \
 git add . && \
 

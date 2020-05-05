@@ -74,7 +74,6 @@ else
     git checkout --orphan $BRANCH && \
     git rm -rf . && \
     git pull $REPOSITORY_PATH $BRANCH
-    git branch -avv
 fi
 
 # Checks out the base branch to begin the deploy process
@@ -84,29 +83,33 @@ git checkout "${BASE_BRANCH:-master}" && \
 echo "Running build scripts... $BUILD_SCRIPT" && \
 eval "$BUILD_SCRIPT" && \
 
-if [ "$(ls "$FOLDER" | wc -l)" -eq 0 ]
+if [ -d "$FOLDER" ]
 then
-    echo "Build folder is empty. Nothing to do here."
+    if [ -z "$(ls -A ${FOLDER})"]
+    then
+        echo "Build folder is empty. Nothing to do here." && \
+        exit 0
+    fi
+else
+    echo "Build folder does not exist. Nothing to do here." && \
     exit 0
 fi
 
-if [ "CNAME" ];
+if [ "$CNAME" ];
 then
     echo "Generating a CNAME file in the $FOLDER directory..."
     echo $CNAME > $FOLDER/CNAME
 fi
 
 # moving deployment $FOLDER out of git folder
+echo "Moving build directory to tmp" && \
 mv -v $FOLDER $HOME && \
-
-# Commits the data to GitHub
-git branch -a
 
 echo "Deploying to GitHub..." && \
 git checkout $BRANCH && \
 
 # Checking the content of moved dist
-ls "${HOME}/${FOLDER}/"
+echo "Moving back the build artifacts in ${BRANCH}" && \
 mv "${HOME}/${FOLDER}"/* . && \
 git add . && \
 

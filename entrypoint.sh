@@ -104,6 +104,8 @@ then
     git push $REPOSITORY_PATH $BRANCH
 else 
     git pull $REPOSITORY_PATH $BRANCH && \
+    echo 'Im here' && \
+    ls -la
     git rm -rf .
 fi
 

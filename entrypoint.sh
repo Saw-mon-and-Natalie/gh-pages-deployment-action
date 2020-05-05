@@ -94,7 +94,7 @@ git checkout --orphan $BRANCH && \
 # Remove all content except .git folder
 echo "Removing everything except .git folder" && \
 find . ! \( -name '.' -type d \) -and ! \( -name '.git' -type d \) -and -type d -exec rm -rf {} + && \
-find . -type f -exec rm -rf {} + && \
+find . ! -name '.git' -and -type f -exec rm -rf {} + && \
 
 if [ $REMOTE_BRANCH_EXISTS -eq 0 ];
 then

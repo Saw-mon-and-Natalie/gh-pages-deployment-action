@@ -57,25 +57,6 @@ git config --global user.name "${COMMIT_NAME}" && \
 ## Initializes the repository path using the access token
 REPOSITORY_PATH="https://${ACCESS_TOKEN:-"x-access-token:$GITHUB_TOKEN"}@github.com/${GITHUB_REPOSITORY}.git" && \
 
-# Checks to see if the remote exists prior to deploying
-# If the branch doesn't exist it gets created here as an orphan
-REMOTE_BRANCH_EXISTS="$(git ls-remote --heads "$REPOSITORY_PATH" "$BRANCH" | wc -l)"
-if [ $REMOTE_BRANCH_EXISTS -eq 0 ];
-then
-    echo "Creating remote branch ${BRANCH} as it doesn't exist..."
-    git checkout "${BASE_BRANCH:-master}" && \
-    git checkout --orphan $BRANCH && \
-    git rm -rf . && \
-    touch README.md && \
-    git add README.md && \
-    git commit -m "Initial ${BRANCH} commit" && \
-    git push $REPOSITORY_PATH $BRANCH
-else 
-    git checkout --orphan $BRANCH && \
-    git rm -rf . && \
-    git pull $REPOSITORY_PATH $BRANCH
-fi
-
 # Checks out the base branch to begin the deploy process
 git checkout "${BASE_BRANCH:-master}" && \
 
@@ -105,8 +86,24 @@ fi
 echo "Moving build directory to tmp" && \
 mv -v $FOLDER $HOME && \
 
+# Checks to see if the remote exists prior to deploying
+# If the branch doesn't exist it gets created here as an orphan
+REMOTE_BRANCH_EXISTS="$(git ls-remote --heads "$REPOSITORY_PATH" "$BRANCH" | wc -l)"
+git checkout --orphan $BRANCH && \
+git rm -rf . && \
+
+if [ $REMOTE_BRANCH_EXISTS -eq 0 ];
+then
+    echo "Creating remote branch ${BRANCH} as it doesn't exist..."
+    touch README.md && \
+    git add README.md && \
+    git commit -m "Initial ${BRANCH} commit" && \
+    git push $REPOSITORY_PATH $BRANCH
+else 
+    git pull $REPOSITORY_PATH $BRANCH
+fi
+
 echo "Deploying to GitHub..." && \
-git checkout $BRANCH && \
 
 # Checking the content of moved dist
 echo "Moving back the build artifacts in ${BRANCH}" && \

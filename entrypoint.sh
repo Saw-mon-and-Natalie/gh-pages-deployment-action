@@ -88,7 +88,7 @@ mv -v $FOLDER $HOME && \
 
 # Checks to see if the remote exists prior to deploying
 # If the branch doesn't exist it gets created here as an orphan
-REMOTE_BRANCH_EXISTS="$(git ls-remote --heads "$REPOSITORY_PATH" "$BRANCH" | wc -l)"
+REMOTE_BRANCH_EXISTS="$(git ls-remote --heads "$REPOSITORY_PATH" "$BRANCH" | wc -l)" && \
 git checkout --orphan $BRANCH && \
 
 # Remove all content except .git folder
@@ -104,7 +104,7 @@ then
     git push $REPOSITORY_PATH $BRANCH
 else 
     git pull $REPOSITORY_PATH $BRANCH && \
-    git rm -rf . && \
+    git rm -rf .
 fi
 
 echo "Deploying to GitHub..." && \

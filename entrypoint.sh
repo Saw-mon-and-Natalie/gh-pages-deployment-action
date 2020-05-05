@@ -85,7 +85,7 @@ eval "$BUILD_SCRIPT" && \
 
 if [ -d "$FOLDER" ]
 then
-    if [ -z "$(ls -A ${FOLDER})"]
+    if [ -z "$(ls -A ${FOLDER})" ]
     then
         echo "Build folder is empty. Nothing to do here." && \
         exit 0

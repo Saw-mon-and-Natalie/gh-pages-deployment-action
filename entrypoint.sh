@@ -1,4 +1,4 @@
-#! /bin/sh -lvx
+#! /bin/sh -l
 
 set -e
 

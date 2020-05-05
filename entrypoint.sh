@@ -14,7 +14,7 @@ then
     exit 1
 fi
 
-if [ -z "$FOLDER"]
+if [ -z "$FOLDER" ]
 then
     echo "You must provide the action with the folder name in the repository where you compiled page lives."
     exit 1
@@ -34,12 +34,12 @@ apt-get install -y jq && \
 COMMIT_EMAIL=`jq '.pusher.email' ${GITHUB_EVENT_PATH}`
 COMMIT_NAME=`jq '.pusher.name' ${GITHUB_EVENT_PATH}`
 
-if [ -z "$COMMIT_EMAIL"]
+if [ -z "$COMMIT_EMAIL" ]
 then
     COMMIT_EMAIL="${GITHUB_ACTOR:-github-pages-deploy-action}@user.no-reply.github.com"
 fi
 
-if [ -z "$COMMIT_NAME"]
+if [ -z "$COMMIT_NAME" ]
 then
     COMMIT_NAME="${GITHUB_ACTOR:-GitHub Pages Deploy Action}"
 fi

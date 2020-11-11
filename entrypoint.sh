@@ -82,6 +82,13 @@ then
     echo $CNAME > $FOLDER/CNAME
 fi
 
+if [ "$NOJEKYLL" == "true" ];
+then
+    echo "Adding .nojekyll file to the $FOLDER directroy."
+    touch "$FOLDER/.nojekyll" && \
+    ls "$FOLDER"
+fi
+
 # moving deployment $FOLDER out of git folder
 echo "Moving build directory to tmp" && \
 mv -v $FOLDER $HOME && \

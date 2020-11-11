@@ -82,7 +82,7 @@ then
     echo $CNAME > $FOLDER/CNAME
 fi
 
-if [ "$NOJEKYLL" == "true" ];
+if [ ! -z "$NOJEKYLL" ];
 then
     echo "Adding .nojekyll file to the $FOLDER directroy."
     touch "$FOLDER/.nojekyll" && \
@@ -123,9 +123,9 @@ echo "Deploying to GitHub..." && \
 
 # Checking the content of moved dist
 echo "Moving back the build artifacts in ${BRANCH}" && \
-mv "${HOME}/${FOLDER}"/* . && \
+mv -v "${HOME}/${FOLDER}"/.[!.]* . && \
 
-if [ "$NOJEKYLL" == "true" ];
+if [ ! -z "$NOJEKYLL" ];
 then
     echo "Adding .nojekyll file."
     touch ".nojekyll" && \

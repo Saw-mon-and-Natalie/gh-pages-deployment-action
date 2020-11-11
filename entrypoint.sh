@@ -123,6 +123,7 @@ echo "Deploying to GitHub..." && \
 
 # Checking the content of moved dist
 echo "Moving back the build artifacts in ${BRANCH}" && \
+mv -v "${HOME}/${FOLDER}"/* . && \
 mv -v "${HOME}/${FOLDER}"/.[!.]* . && \
 
 if [ ! -z "$NOJEKYLL" ];

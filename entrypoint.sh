@@ -124,6 +124,14 @@ echo "Deploying to GitHub..." && \
 # Checking the content of moved dist
 echo "Moving back the build artifacts in ${BRANCH}" && \
 mv "${HOME}/${FOLDER}"/* . && \
+
+if [ "$NOJEKYLL" == "true" ];
+then
+    echo "Adding .nojekyll file."
+    touch ".nojekyll" && \
+    ls -la
+fi
+
 git add . && \
 
 git commit -m "Deploying to ${BRANCH} from ${BASE_BRANCH:-master} ${GITHUB_SHA}" --quiet && \
